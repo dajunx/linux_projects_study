@@ -1,5 +1,5 @@
-//#include <stdio.h>
-//#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <cstring>
 //#include <dirent.h>
@@ -19,6 +19,7 @@ void main_menu(); // 主菜单
 void parse_user_input_str_cmd(std::string& input_str_cmd); // 解析用户输入字符串
 void exchange_user_cmd(std::string& user_cmd); // 转换用户自定义命令
 void exec_cmds(std::vector<std::string>& cmds); // 执行命令
+void handle_cd_cmd(std::string& user_cd_cmd); // [特殊]执行cd命令
 
 //----------------------- 函数实现 -------------------------------
 
@@ -26,10 +27,10 @@ void main_menu() {
 	cout << "*******************************************" << endl;
 	cout << "Please select the function:" << endl;
 	cout << "- pwd " << endl;
-	cout << "- dir <dirname>" << endl;
+	cout << "- list <dirname>" << endl;
 	cout << "- cd <dirname or path> " << endl;
-	cout << "- newdir <dirname> " << endl;
-	cout << "- deldir <dirname> " << endl;
+	cout << "- mkdir <dirname> " << endl;
+	cout << "- rmdir <dirname> " << endl;
 	cout << "- help " << endl;
 	cout << "- exit " << endl;
 	cout << "*******************************************" << endl;
@@ -38,13 +39,44 @@ void main_menu() {
 void exchange_user_cmd(std::string& user_cmd) {
 	if (user_cmd.compare("list") == 0) {
 		user_cmd = "ls";
-	}
-	else {
+	} else {
 		// 什么也不做
 	}
 }
 
+void handle_cd_cmd(std::string& user_cd_cmd) {
+	std::size_t pos = user_cd_cmd.find(" ");
+	std::string str_cmds;
+	if (pos == std::string::npos) {
+		// 执行cd 命令，不做任何处理
+		return;
+	}
+
+	str_cmds = user_cd_cmd.substr(0, pos);
+	user_cd_cmd.erase(0, pos + 1);
+
+	char current_path[50];
+	getcwd(current_path, sizeof(current_path)); //获取当前路径
+	std::string str_current_path(current_path);
+	if (user_cd_cmd.compare("..") == 0) {
+		// 返回上级目录
+		pos = str_current_path.find_last_of("\/");
+		str_current_path = str_current_path.substr(0, pos);
+		//strcpy(current_path, str_current_path.c_str());
+		chdir(str_current_path.c_str());
+	} else if (user_cd_cmd.compare(".") == 0) {
+		// 执行cd .命令，不做任何处理
+		return;
+	}
+}
+
 void parse_user_input_str_cmd(std::string& input_str_cmd, std::vector<const char *>& cmds) {
+	// cd 特殊处理
+	if (input_str_cmd.find("cd") != std::string::npos) {
+		handle_cd_cmd(input_str_cmd);
+		return;
+	}
+
 	std::size_t pos = input_str_cmd.find(" ");
 	std::string str_cmds;
 	while (pos != std::string::npos) {
