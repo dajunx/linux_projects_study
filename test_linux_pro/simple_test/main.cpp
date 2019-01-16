@@ -1,22 +1,23 @@
-#include<unistd.h>
-#include<iostream>
-#include<cstring>
-#include<sys/types.h>
-#include<sys/stat.h>
-#include<dirent.h>
-#include<stdlib.h>
-#include<fcntl.h>
-#include<queue>
-#include<ftw.h>
-#include<stdio.h>
-#include<signal.h>
-#include<string>
-#include<vector>
+//#include <stdio.h>
+//#include <stdlib.h>
+#include <iostream>
+#include <cstring>
+//#include <dirent.h>
+//#include <fcntl.h>
+//#include <ftw.h>
+//#include <signal.h>
+#include <string>
+#include <vector>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 using namespace std;
 
 //----------------------- 函数定义头-------------------------------
 void main_menu(); // 主菜单
 void parse_user_input_str_cmd(std::string& input_str_cmd); // 解析用户输入字符串
+void exchange_user_cmd(std::string& user_cmd); // 转换用户自定义命令
 void exec_cmds(std::vector<std::string>& cmds); // 执行命令
 
 //----------------------- 函数实现 -------------------------------
@@ -34,16 +35,27 @@ void main_menu() {
 	cout << "*******************************************" << endl;
 }
 
+void exchange_user_cmd(std::string& user_cmd) {
+	if (user_cmd.compare("list") == 0) {
+		user_cmd = "ls";
+	}
+	else {
+		// 什么也不做
+	}
+}
+
 void parse_user_input_str_cmd(std::string& input_str_cmd, std::vector<const char *>& cmds) {
 	std::size_t pos = input_str_cmd.find(" ");
 	std::string str_cmds;
 	while (pos != std::string::npos) {
 		str_cmds = input_str_cmd.substr(0, pos);
+		exchange_user_cmd(str_cmds);
 		cmds.push_back(str_cmds.c_str());
 		input_str_cmd.erase(0, pos + 1);
 		pos = input_str_cmd.find(" ");
 	}
 
+	exchange_user_cmd(input_str_cmd);
 	cmds.push_back(input_str_cmd.c_str());
 }
 
@@ -56,13 +68,15 @@ void exec_cmds(std::vector<const char *>& cmds) {
 		printf("fork error!");
 	}
 	else if (pid == 0) {
-		if (execvp(command[0], command) < 0) {
-			printf("exec error!");
+		int ret = 0;
+		if (ret = execvp(command[0], command) < 0) {
+			printf("exec error, ret:%d", ret);
 			exit(1);
 		}
 	}
 	else {
 		//wait(NULL);
+		sleep(1);
 	}
 }
 
