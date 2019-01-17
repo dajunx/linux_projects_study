@@ -22,10 +22,3 @@ ComSplit.o:ComSplit.c Myshell.h
 
 clean:
 	rm -rf *.o *.c~ *.c~~ *.c~~ *.h~ *.h~~ test demo
-
-
-	
-	
-	
-	
-
