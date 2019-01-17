@@ -20,6 +20,7 @@ void parse_user_input_str_cmd(std::string& input_str_cmd); // 解析用户输入字符串
 void exchange_user_cmd(std::string& user_cmd); // 转换用户自定义命令
 void exec_cmds(std::vector<std::string>& cmds); // 执行命令
 void handle_cd_cmd(std::string& user_cd_cmd); // [特殊]执行cd命令
+int calc_string_appear_count(std::string input_str); // 计算字符出现次数
 
 //----------------------- 函数实现 -------------------------------
 
@@ -34,6 +35,21 @@ void main_menu() {
 	cout << "- help " << endl;
 	cout << "- exit " << endl;
 	cout << "*******************************************" << endl;
+}
+
+int calc_string_appear_count(std::string input_str) {
+	char handle_str[50];
+	int appear_count = 0;
+	strcpy(handle_str, input_str.c_str());
+	char* pch = strtok(handle_str, "/");
+	while (pch != NULL)
+	{
+		if (strcmp(pch, "..")==0) {
+			appear_count++;
+		}
+		pch = strtok(NULL, "/");
+	}
+	return appear_count;
 }
 
 void exchange_user_cmd(std::string& user_cmd) {
@@ -58,16 +74,12 @@ void handle_cd_cmd(std::string& user_cd_cmd) {
 	char current_path[50];
 	getcwd(current_path, sizeof(current_path)); //获取当前路径
 	std::string str_current_path(current_path);
-	if (user_cd_cmd.compare("..") == 0) {
-		// 返回上级目录
+	int appear_count = calc_string_appear_count(user_cd_cmd);
+	while (appear_count--) {
 		pos = str_current_path.find_last_of("\/");
 		str_current_path = str_current_path.substr(0, pos);
-		//strcpy(current_path, str_current_path.c_str());
-		chdir(str_current_path.c_str());
-	} else if (user_cd_cmd.compare(".") == 0) {
-		// 执行cd .命令，不做任何处理
-		return;
 	}
+	chdir(str_current_path.c_str());
 }
 
 void parse_user_input_str_cmd(std::string& input_str_cmd, std::vector<const char *>& cmds) {
@@ -120,7 +132,7 @@ int main(int argc, char *argv[])
 		std::string input_str_cmd; // 用户输入的命令字符串
 		std::vector<const char *> vec_cmds; // 命令及其参数集合
 
-		std::cout << "[wuwenjie@]$";
+		std::cout << "[djz@]$";
 		fflush(stdout);
 		std::getline(std::cin, input_str_cmd);
 		if (input_str_cmd.compare("exit") == 0) {
