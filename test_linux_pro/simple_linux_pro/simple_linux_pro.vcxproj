@@ -35,14 +35,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{ca3f5190-be6e-49d7-8b05-29977c8277bc}</ProjectGuid>
+    <ProjectGuid>{ae3baf89-8301-4a1f-9c20-615c82dc8538}</ProjectGuid>
     <Keyword>Linux</Keyword>
-    <RootNamespace>test_linux_pro</RootNamespace>
+    <RootNamespace>simple_linux_pro</RootNamespace>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <ApplicationType>Linux</ApplicationType>
     <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
     <TargetLinuxPlatform>Generic</TargetLinuxPlatform>
-    <LinuxProjectType>{D51BCBC9-82E9-4017-911E-C93873C4EA2B}</LinuxProjectType>
+    <LinuxProjectType>{2238F9CD-F817-4ECC-BD14-2524D2669B35}</LinuxProjectType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
@@ -75,17 +75,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClCompile Include="..\..\..\vs2010\zyy\ComRmind.c" />
-    <ClCompile Include="..\..\..\vs2010\zyy\ComSplit.c" />
-    <ClCompile Include="..\..\..\vs2010\zyy\ExtCom.c" />
-    <ClCompile Include="..\..\..\vs2010\zyy\IntCom.c" />
-    <ClCompile Include="..\..\..\vs2010\zyy\test.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\vs2010\zyy\Makefile" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\vs2010\zyy\Myshell.h" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
