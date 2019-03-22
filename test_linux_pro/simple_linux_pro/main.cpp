@@ -20,7 +20,7 @@ void copy_file(std::string const& src_filename, std::string const& dsc_filename)
   }
 
   int openFlags, filePerms;
-  openFlags = O_CREAT | O_WRONLY | O_TRUNC;
+  openFlags = O_CREAT | O_WRONLY /*| O_TRUNC*/;
   filePerms = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP |
               S_IROTH | S_IWOTH;      /* rw-rw-rw- */
   open_fd_dsc = open(dsc_filename.c_str(), openFlags, filePerms);
@@ -29,20 +29,32 @@ void copy_file(std::string const& src_filename, std::string const& dsc_filename)
     return;
   }
 
-  // 读取文件
+  //// 读取文件
+  //char buf[MAXSIZE];
+  //read_bytes = read(open_fd_src, buf, MAXSIZE);
+  //if (read_bytes == -1) {
+  //  std::cout << "read " << src_filename << " file failed." << std::endl;
+  //  return;
+  //}
+  //
+  //// 写入文件
+  //call_api_ret = write(open_fd_dsc, buf, read_bytes);
+  //if (call_api_ret == -1) {
+  //  std::cout << "read " << src_filename << " file failed." << std::endl;
+  //  return;
+  //}
+  
+  // 转存文件
   char buf[MAXSIZE];
-  read_bytes = read(open_fd_src, buf, MAXSIZE);
-  if (read_bytes == -1) {
-    std::cout << "read " << src_filename << " file failed." << std::endl;
-    return;
+  int copy_count = 0;
+  while ((read_bytes = read(open_fd_src, buf, MAXSIZE)) > 0) {
+    copy_count++;
+    if (write(open_fd_dsc, buf, read_bytes) != read_bytes) {
+      std::cout << "err " << std::endl;
+    }
   }
 
-  // 写入文件
-  call_api_ret = write(open_fd_dsc, buf, read_bytes);
-  if (call_api_ret == -1) {
-    std::cout << "read " << src_filename << " file failed." << std::endl;
-    return;
-  }
+  std::cout << "file copy count:" << copy_count << std::endl;
 }
 
 int main() {
