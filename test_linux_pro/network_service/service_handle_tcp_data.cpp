@@ -106,7 +106,7 @@ void handle_network_data_by_socket(int sockfd) {
   size_t api_ret;
   std::cout << "begin receive data."<< std::endl;
   while ((read_bytes = read(sockfd, buf, MAXSIZE)) > 0) {
-    std::cout << "receive data:" << buf << std::endl;
+    //std::cout << "receive data:" << buf << std::endl;
     // 使用网络接口传输读取到的数据
     api_ret = write(open_fd_dsc, buf, strlen(buf));
     if (api_ret == -1) {
