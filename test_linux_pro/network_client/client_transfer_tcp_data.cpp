@@ -53,14 +53,16 @@ int main() {
 }
 
 // 解析本地文件，然后使用网络模块发送到服务端
-#define MAXSIZE 256
+//#define MAXSIZE 256
+#define MAXSIZE 1500
 void trans_file_by_socket(int sockfd) {
-  std::string source_file_name("./file");
+  std::string source_file_name("./text_file");
 
   // 打开指定文件
   int open_fd_src = open(source_file_name.c_str(), O_RDONLY);
   if (open_fd_src == -1) {
-    std::cout << "open " << source_file_name << " file failed, errno: "<< errno << std::endl;
+    std::cout << "open " << source_file_name 
+              << " file failed, errno: "<< strerror(errno) << std::endl;
     return;
   }
 
@@ -68,11 +70,13 @@ void trans_file_by_socket(int sockfd) {
   char buf[MAXSIZE];
   size_t read_bytes = -1;
   size_t api_ret;
-  while ((read_bytes = read(open_fd_src, buf, MAXSIZE)) > 0) {
+  while ((read_bytes = read(open_fd_src, buf, MAXSIZE-1)) > 0) {
+    buf[MAXSIZE - 1] = '\0';
     // 使用网络接口传输读取到的数据
-    api_ret = write(sockfd, buf, strlen(buf));
+    api_ret = write(sockfd, buf, strlen(buf)-1);
     if (api_ret == -1) {
-      std::cout << "write data to socket meet err." << std::endl;
+      std::cout << "write data to socket meet err, errno:" 
+                << strerror(errno) << std::endl;
       continue;
     }
 
@@ -80,5 +84,4 @@ void trans_file_by_socket(int sockfd) {
     //api_ret = read(sockfd, recvline, MAXLINE);
   }
   
-  sleep(100);
 }

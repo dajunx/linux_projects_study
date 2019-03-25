@@ -58,8 +58,8 @@ void copy_file(std::string const& src_filename, std::string const& dsc_filename)
 }
 
 int main() {
-  std::string source_file_name("/root/projects/simple_linux_pro/file");
-  std::string desc_file_name("/root/projects/simple_linux_pro/file1");
+  std::string source_file_name("/root/projects/simple_linux_pro/text_file");
+  std::string desc_file_name("/root/projects/simple_linux_pro/text_file1");
   copy_file(source_file_name, desc_file_name);
 
   return 0;
