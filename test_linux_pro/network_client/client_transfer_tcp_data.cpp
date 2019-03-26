@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include <arpa/inet.h>  /* inet(3) functions */
 #include <netdb.h>      /*gethostbyname function */
 #include <netinet/in.h> /* sockaddr_in{} and other Internet defns */
@@ -53,8 +52,7 @@ int main() {
 }
 
 // 解析本地文件，然后使用网络模块发送到服务端
-//#define MAXSIZE 256
-#define MAXSIZE 1500
+#define MAXSIZE 200
 void trans_file_by_socket(int sockfd) {
   std::string source_file_name("./text_file");
 
@@ -70,18 +68,18 @@ void trans_file_by_socket(int sockfd) {
   char buf[MAXSIZE];
   size_t read_bytes = -1;
   size_t api_ret;
+  int package_count = 0;
   while ((read_bytes = read(open_fd_src, buf, MAXSIZE-1)) > 0) {
-    buf[MAXSIZE - 1] = '\0';
     // 使用网络接口传输读取到的数据
-    api_ret = write(sockfd, buf, strlen(buf)-1);
+    api_ret = write(sockfd, buf, read_bytes);
     if (api_ret == -1) {
       std::cout << "write data to socket meet err, errno:" 
                 << strerror(errno) << std::endl;
       continue;
     }
-
+    package_count++;
     ///TODO 等待对端应答
     //api_ret = read(sockfd, recvline, MAXLINE);
   }
-  
+  std::cout << "client send package count: " << package_count << std::endl;
 }

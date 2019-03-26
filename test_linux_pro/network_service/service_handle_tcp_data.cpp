@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include <arpa/inet.h>  /* inet(3) functions */
 #include <netinet/in.h> /* sockaddr_in{} and other Internet defns */
 #include <sys/socket.h> /* basic socket definitions */
@@ -85,8 +84,7 @@ int main() {
 }
 
 // 解析本地文件，然后使用网络模块发送到服务端
-//#define MAXSIZE 256
-#define MAXSIZE 1500
+#define MAXSIZE 200
 void handle_network_data_by_socket(int sockfd) {
   std::string source_file_name("./text_file1");
 
@@ -97,7 +95,8 @@ void handle_network_data_by_socket(int sockfd) {
               S_IROTH | S_IWOTH;      /* rw-rw-rw- */
   int open_fd_dsc = open(source_file_name.c_str(), openFlags, filePerms);
   if (open_fd_dsc == -1) {
-    std::cout << "open " << source_file_name << " file failed, errno: " << strerror(errno) << std::endl;
+    std::cout << "open " << source_file_name 
+              << " file failed, errno: " << strerror(errno) << std::endl;
     return;
   }
 
@@ -106,15 +105,17 @@ void handle_network_data_by_socket(int sockfd) {
   size_t read_bytes = -1;
   size_t api_ret;
   std::cout << "begin receive data."<< std::endl;
+  int package_count = 0;
   while ((read_bytes = read(sockfd, buf, MAXSIZE-1)) > 0) {
-    buf[MAXSIZE - 1] = '\0';
-    //std::cout << "receive data:" << buf << std::endl;
     // 使用网络接口传输读取到的数据
-    api_ret = write(open_fd_dsc, buf, strlen(buf)-1);
+    api_ret = write(open_fd_dsc, buf, read_bytes);
     if (api_ret == -1) {
-      std::cout << "write data to socket meet err, errno: " << strerror(errno) << std::endl;
+      std::cout << "write data to socket meet err, errno: " 
+                << strerror(errno) << std::endl;
       continue;
     }
+    package_count++;
   }
-  std::cout << "finished receive data." << std::endl;
+  std::cout << "finished receive data, receive package count: " 
+            << package_count << std::endl;
 }
