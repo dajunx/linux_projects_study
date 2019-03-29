@@ -20,14 +20,10 @@ void trans_file_by_socket(int sockfd);
 
 int main() {
   char *servInetAddr = (char *)malloc(10);
-  sprintf(servInetAddr, "%s", "127.0.0.1");
+  sprintf(servInetAddr, "%s", "119.29.36.228");
   int servPort = 6888;
   int connfd;
   struct sockaddr_in servaddr;
-
-  // 写死ip和port
-  servPort = 6888;
-  strcpy(servInetAddr, "127.0.0.1");
 
   connfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -52,7 +48,7 @@ int main() {
 }
 
 // 解析本地文件，然后使用网络模块发送到服务端
-#define MAXSIZE 200
+#define MAXSIZE 1500
 void trans_file_by_socket(int sockfd) {
   std::string source_file_name("./text_file");
 

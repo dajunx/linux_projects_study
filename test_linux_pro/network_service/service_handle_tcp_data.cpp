@@ -84,7 +84,7 @@ int main() {
 }
 
 // 解析本地文件，然后使用网络模块发送到服务端
-#define MAXSIZE 200
+#define MAXSIZE 1500
 void handle_network_data_by_socket(int sockfd) {
   std::string source_file_name("./text_file1");
 
