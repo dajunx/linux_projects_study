@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source code">
+      <UniqueIdentifier>{e8cb9c00-22bc-4935-9ac1-9d2145c503ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="hash.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="inout.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="mathlib.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="opcode.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="strlib.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="table.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="y_tab.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="iolib.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="lex_yy.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+    <ClCompile Include="lua.c">
+      <Filter>source code</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hash.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+    <ClInclude Include="inout.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+    <ClInclude Include="lua.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+    <ClInclude Include="lualib.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+    <ClInclude Include="opcode.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+    <ClInclude Include="table.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+    <ClInclude Include="y_tab.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+    <ClInclude Include="floatingpoint.h">
+      <Filter>source code</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile">
+      <Filter>source code</Filter>
+    </None>
+    <None Include="README">
+      <Filter>source code</Filter>
+    </None>
+    <None Include="save.lua">
+      <Filter>source code</Filter>
+    </None>
+    <None Include="sort.lua">
+      <Filter>source code</Filter>
+    </None>
+    <None Include="test.lua">
+      <Filter>source code</Filter>
+    </None>
+    <None Include="type.lua">
+      <Filter>source code</Filter>
+    </None>
+    <None Include="array.lua">
+      <Filter>source code</Filter>
+    </None>
+    <None Include="globals.lua">
+      <Filter>source code</Filter>
+    </None>
+  </ItemGroup>
+</Project>
