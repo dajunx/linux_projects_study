@@ -1,14 +1,12 @@
 OBJS= hash.o inout.o lex_yy.o opcode.o table.o y_tab.o lua.o iolib.o mathlib.o strlib.o
+DEPS= hash.h inout.h lex_yy.h opcode.h table.h y_tab.h lua.h iolib.h mathlib.h strlib.h
 
-;CFLAGS= -O2 -I.
 CFLAGS= -I.
 
-T= lua
-
-all:	$T
-
-$T:	$(OBJS)
-	$(CC) -g -o $@ $(OBJS) -lm
+lua: lua.o
+	gcc -g -o lua.o -lm
+$(OBJS): $(OBJS) $(DEPS)
+	gcc -g -c -o $@ $< $(CFLAGS)
 
 A=--------------------------------------------------------------------------
 test:	$T
