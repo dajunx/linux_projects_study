@@ -1,11 +1,15 @@
 #include <iostream>
+#include<stdio.h>
 
-void func1() {
-  int i = 0;
-}
+int main()
+{
+  char buff[] = {'0', '0', '57', '111', '9'};
 
-int main() {
-  func1();
+  FILE* file_open = fopen("lin.bin", "ab+");
+  FILE* file_write = fopen("lin.bin", "wb");
+
+  fwrite(buff, 1, 5, file_write);
+  fread(buff, 1, 5, file_open);
 
   return 0;
 }
